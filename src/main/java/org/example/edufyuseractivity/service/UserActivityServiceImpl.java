@@ -26,40 +26,24 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public UserActivity likeMedia(UserActivityDto dto) {
-        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
-                dto.getMediaId(), dto.getMediaType(), dto.getUserId());
-
-        if (existing.isPresent()) {
-            UserActivity userActivity = existing.get();
-            userActivity.setReaction(Reaction.LIKE);
-            userActivity.setReactionDate(LocalDateTime.now());
-            return userActivityRepository.save(userActivity);
-        } else {
-            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
-            newUserActivity.setReaction(Reaction.LIKE);
-            newUserActivity.setReactionDate(LocalDateTime.now());
-            userActivityRepository.save(newUserActivity);
-            return newUserActivity;
-        }
+        return reaction(dto, Reaction.LIKE);
     }
 
     @Override
     public UserActivity dislikeMedia(UserActivityDto dto) {
+        return reaction(dto, Reaction.DISLIKE);
+    }
+
+    @Override
+    public UserActivity reaction(UserActivityDto dto, Reaction reaction) {
         Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
                 dto.getMediaId(), dto.getMediaType(), dto.getUserId());
 
-        if (existing.isPresent()) {
-            UserActivity userActivity = existing.get();
-            userActivity.setReaction(Reaction.DISLIKE);
-            userActivity.setReactionDate(LocalDateTime.now());
-            return userActivityRepository.save(userActivity);
-        } else {
-            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
-            newUserActivity.setReaction(Reaction.DISLIKE);
-            newUserActivity.setReactionDate(LocalDateTime.now());
-            userActivityRepository.save(newUserActivity);
-            return newUserActivity;
-        }
+        UserActivity userActivity = existing.orElseGet(() -> userActivityMapper.entityFromDto(dto));
+        userActivity.setReaction(reaction);
+        userActivity.setReactionDate(LocalDateTime.now());
+
+        return userActivityRepository.save(userActivity);
     }
 
     @Override
@@ -67,18 +51,11 @@ public class UserActivityServiceImpl implements UserActivityService {
         Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
                 dto.getMediaId(), dto.getMediaType(), dto.getUserId());
 
-        if (existing.isPresent()) {
-            UserActivity userActivity = existing.get();
-            userActivity.setUserClickedPlay(true);
-            userActivity.setLastPlayed(LocalDateTime.now());
-            return userActivityRepository.save(userActivity);
-        }  else {
-            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
-            newUserActivity.setUserClickedPlay(true);
-            newUserActivity.setLastPlayed(LocalDateTime.now());
-            userActivityRepository.save(newUserActivity);
-            return newUserActivity;
-        }
+        UserActivity userActivity = existing.orElseGet(() -> userActivityMapper.entityFromDto(dto));
+        userActivity.setUserClickedPlay(true);
+        userActivity.setLastPlayed(LocalDateTime.now());
+
+        return userActivityRepository.save(userActivity);
     }
 
     @Override

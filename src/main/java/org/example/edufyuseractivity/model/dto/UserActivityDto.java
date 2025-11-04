@@ -3,7 +3,6 @@ package org.example.edufyuseractivity.model.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.example.edufyuseractivity.enumeration.MediaType;
-import org.example.edufyuseractivity.enumeration.Reaction;
 
 public class UserActivityDto {
     @NotBlank
@@ -14,10 +13,6 @@ public class UserActivityDto {
 
     @NotNull
     private MediaType mediaType;
-
-    /*private Reaction reaction;
-
-    private boolean userClickedPlay;*/
 
     public Long getUserId() {
         return userId;
@@ -43,19 +38,4 @@ public class UserActivityDto {
         this.mediaType = mediaType;
     }
 
-    /*public Reaction getReaction() {
-        return reaction;
-    }
-
-    public void setReaction(Reaction reaction) {
-        this.reaction = reaction;
-    }
-
-    public boolean hasUserClickedPlay() {
-        return userClickedPlay;
-    }
-
-    public void setUserClickedPlay(boolean userClickedPlay) {
-        this.userClickedPlay = userClickedPlay;
-    }*/
 }

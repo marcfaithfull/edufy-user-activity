@@ -4,12 +4,10 @@ import org.example.edufyuseractivity.model.dto.UserActivityDto;
 import org.example.edufyuseractivity.model.entity.UserActivity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class UserActivityMapper {
 
-    public UserActivity dtoToEntity(UserActivityDto userActivityDTO) {
+    public UserActivity entityFromDto(UserActivityDto userActivityDTO) {
         UserActivity userActivity = new UserActivity();
         userActivity.setUserId(userActivityDTO.getUserId());
         userActivity.setMediaId(userActivityDTO.getMediaId());
