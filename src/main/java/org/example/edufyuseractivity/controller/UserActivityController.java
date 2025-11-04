@@ -20,19 +20,25 @@ public class UserActivityController {
         this.userActivityService = userActivityService;
     }
 
-    @PostMapping("/post/activity")
-    public ResponseEntity<UserActivity> saveUserActivity(@RequestBody UserActivityDto activity) {
-        UserActivity savedActivity = userActivityService.saveActivity(activity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedActivity);
+    @PostMapping("/react")
+    public ResponseEntity<UserActivity> saveUserReaction(@RequestBody UserActivityDto activity) {
+        UserActivity savedActivity = userActivityService.saveReaction(activity);
+        return ResponseEntity.status(HttpStatus.OK).body(savedActivity);
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<List<UserActivity>> getUserActivity(@RequestParam String userId) {
-        return ResponseEntity.ok(userActivityService.getUserActivity(userId));
+    @PostMapping("/played")
+    public ResponseEntity<UserActivity> savePlayActivity(@RequestBody UserActivityDto activity) {
+        UserActivity playActivity = userActivityService.savePlayedActivity(activity);
+        return ResponseEntity.status(HttpStatus.OK).body(playActivity);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<UserActivity>> getUserActivity(@PathVariable Long id) {
+        return ResponseEntity.ok(userActivityService.getUserActivity(id));
     }
 
     @GetMapping("/media")
-    public ResponseEntity<List<UserActivity>> getMediaActivity(@RequestParam String mediaId, @RequestParam MediaType mediaType) {
+    public ResponseEntity<List<UserActivity>> getMediaActivity(@RequestParam Long mediaId, @RequestParam MediaType mediaType) {
         return ResponseEntity.ok(userActivityService.getMediaActivity(mediaId, mediaType));
     }
 }

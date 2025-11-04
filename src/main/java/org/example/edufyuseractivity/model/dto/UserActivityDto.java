@@ -7,27 +7,32 @@ import org.example.edufyuseractivity.enumeration.Reaction;
 
 public class UserActivityDto {
     @NotBlank
-    private String userId;
+    private Long userId;
+
     @NotBlank
-    private String mediaId;
+    private Long mediaId;
+
     @NotNull
     private MediaType mediaType;
+
     @NotNull
     private Reaction reaction;
 
-    public String getUserId() {
+    private boolean userClickedPlay;
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getMediaId() {
+    public Long getMediaId() {
         return mediaId;
     }
 
-    public void setMediaId(String mediaId) {
+    public void setMediaId(Long mediaId) {
         this.mediaId = mediaId;
     }
 
@@ -45,5 +50,13 @@ public class UserActivityDto {
 
     public void setReaction(Reaction reaction) {
         this.reaction = reaction;
+    }
+
+    public boolean isUserClickedPlay() {
+        return userClickedPlay;
+    }
+
+    public void setUserClickedPlay(boolean userClickedPlay) {
+        this.userClickedPlay = userClickedPlay;
     }
 }

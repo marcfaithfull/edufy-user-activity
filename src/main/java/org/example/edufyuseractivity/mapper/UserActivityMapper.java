@@ -14,8 +14,11 @@ public class UserActivityMapper {
         userActivity.setUserId(userActivityDTO.getUserId());
         userActivity.setMediaId(userActivityDTO.getMediaId());
         userActivity.setMediaType(userActivityDTO.getMediaType());
-        userActivity.setReaction(userActivityDTO.getReaction());
-        userActivity.setDateTime(LocalDateTime.now());
+        if (userActivityDTO.getReaction() != null) {
+            userActivity.setReaction(userActivityDTO.getReaction());
+        }
+        userActivity.setUserClickedPlay(userActivityDTO.isUserClickedPlay());
+        userActivity.setLatestInteraction(LocalDateTime.now());
         return userActivity;
     }
 }
