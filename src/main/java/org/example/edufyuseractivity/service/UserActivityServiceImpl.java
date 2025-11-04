@@ -1,6 +1,7 @@
 package org.example.edufyuseractivity.service;
 
 import org.example.edufyuseractivity.enumeration.MediaType;
+import org.example.edufyuseractivity.enumeration.Reaction;
 import org.example.edufyuseractivity.model.dto.UserActivityDto;
 import org.example.edufyuseractivity.model.entity.UserActivity;
 import org.example.edufyuseractivity.mapper.UserActivityMapper;
@@ -24,16 +25,38 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public UserActivity saveReaction(UserActivityDto dto) {
-        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(dto.getMediaId(), dto.getMediaType(), dto.getUserId());
+    public UserActivity likeMedia(UserActivityDto dto) {
+        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
+                dto.getMediaId(), dto.getMediaType(), dto.getUserId());
 
         if (existing.isPresent()) {
             UserActivity userActivity = existing.get();
-            userActivity.setReaction(dto.getReaction());
-            userActivity.setLatestInteraction(LocalDateTime.now());
+            userActivity.setReaction(Reaction.LIKE);
+            userActivity.setReactionDate(LocalDateTime.now());
             return userActivityRepository.save(userActivity);
         } else {
             UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
+            newUserActivity.setReaction(Reaction.LIKE);
+            newUserActivity.setReactionDate(LocalDateTime.now());
+            userActivityRepository.save(newUserActivity);
+            return newUserActivity;
+        }
+    }
+
+    @Override
+    public UserActivity dislikeMedia(UserActivityDto dto) {
+        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
+                dto.getMediaId(), dto.getMediaType(), dto.getUserId());
+
+        if (existing.isPresent()) {
+            UserActivity userActivity = existing.get();
+            userActivity.setReaction(Reaction.DISLIKE);
+            userActivity.setReactionDate(LocalDateTime.now());
+            return userActivityRepository.save(userActivity);
+        } else {
+            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
+            newUserActivity.setReaction(Reaction.DISLIKE);
+            newUserActivity.setReactionDate(LocalDateTime.now());
             userActivityRepository.save(newUserActivity);
             return newUserActivity;
         }
@@ -41,16 +64,18 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public UserActivity savePlayedActivity(UserActivityDto dto) {
-        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(dto.getMediaId(), dto.getMediaType(), dto.getUserId());
+        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(
+                dto.getMediaId(), dto.getMediaType(), dto.getUserId());
 
         if (existing.isPresent()) {
             UserActivity userActivity = existing.get();
             userActivity.setUserClickedPlay(true);
-            userActivity.setLatestInteraction(LocalDateTime.now());
+            userActivity.setLastPlayed(LocalDateTime.now());
             return userActivityRepository.save(userActivity);
         }  else {
             UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
             newUserActivity.setUserClickedPlay(true);
+            newUserActivity.setLastPlayed(LocalDateTime.now());
             userActivityRepository.save(newUserActivity);
             return newUserActivity;
         }

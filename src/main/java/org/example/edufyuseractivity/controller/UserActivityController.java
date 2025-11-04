@@ -20,21 +20,27 @@ public class UserActivityController {
         this.userActivityService = userActivityService;
     }
 
-    @PostMapping("/react")
-    public ResponseEntity<UserActivity> saveUserReaction(@RequestBody UserActivityDto activity) {
-        UserActivity savedActivity = userActivityService.saveReaction(activity);
+    @PutMapping("/like")
+    public ResponseEntity<UserActivity> likeMedia(@RequestBody UserActivityDto activity) {
+        UserActivity savedActivity = userActivityService.likeMedia(activity);
         return ResponseEntity.status(HttpStatus.OK).body(savedActivity);
     }
 
-    @PostMapping("/played")
+    @PutMapping("/dislike")
+    public ResponseEntity<UserActivity> dislikeMedia(@RequestBody UserActivityDto activity) {
+        UserActivity savedActivity = userActivityService.dislikeMedia(activity);
+        return ResponseEntity.status(HttpStatus.OK).body(savedActivity);
+    }
+
+    @PutMapping("/played")
     public ResponseEntity<UserActivity> savePlayActivity(@RequestBody UserActivityDto activity) {
         UserActivity playActivity = userActivityService.savePlayedActivity(activity);
         return ResponseEntity.status(HttpStatus.OK).body(playActivity);
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<UserActivity>> getUserActivity(@PathVariable Long id) {
-        return ResponseEntity.ok(userActivityService.getUserActivity(id));
+    @GetMapping("/user")
+    public ResponseEntity<List<UserActivity>> getUserActivity(@RequestParam Long userId) {
+        return ResponseEntity.ok(userActivityService.getUserActivity(userId));
     }
 
     @GetMapping("/media")

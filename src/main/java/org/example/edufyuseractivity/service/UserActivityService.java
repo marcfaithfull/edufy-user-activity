@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface UserActivityService {
 
-    UserActivity saveReaction(UserActivityDto userActivity);
+    UserActivity likeMedia(UserActivityDto userActivity);
+
+    UserActivity dislikeMedia(UserActivityDto userActivity);
 
     UserActivity savePlayedActivity(UserActivityDto userActivity);
 

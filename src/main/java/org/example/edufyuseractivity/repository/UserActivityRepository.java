@@ -15,7 +15,5 @@ public interface UserActivityRepository extends JpaRepository<UserActivity,Long>
 
     List<UserActivity> findByMediaIdAndMediaType(Long mediaId, MediaType mediaType);
 
-    Optional<UserActivity> findByMediaIdAndUserId(Long mediaId, Long userId);
-
     Optional<UserActivity> findByMediaIdAndMediaTypeAndUserId(Long mediaId, MediaType mediaType, Long userId);
 }
