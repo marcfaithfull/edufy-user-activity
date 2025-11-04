@@ -15,10 +15,9 @@ public class UserActivityDto {
     @NotNull
     private MediaType mediaType;
 
-    @NotNull
-    private Reaction reaction;
+    /*private Reaction reaction;
 
-    private boolean userClickedPlay;
+    private boolean userClickedPlay;*/
 
     public Long getUserId() {
         return userId;
@@ -44,7 +43,7 @@ public class UserActivityDto {
         this.mediaType = mediaType;
     }
 
-    public Reaction getReaction() {
+    /*public Reaction getReaction() {
         return reaction;
     }
 
@@ -52,11 +51,11 @@ public class UserActivityDto {
         this.reaction = reaction;
     }
 
-    public boolean isUserClickedPlay() {
+    public boolean hasUserClickedPlay() {
         return userClickedPlay;
     }
 
     public void setUserClickedPlay(boolean userClickedPlay) {
         this.userClickedPlay = userClickedPlay;
-    }
+    }*/
 }

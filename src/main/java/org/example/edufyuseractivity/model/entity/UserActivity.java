@@ -32,8 +32,11 @@ public class UserActivity {
     @Column(name = "user_clicked_play")
     private Boolean userClickedPlay = false;
 
-    @Column(name = "latest_activity")
-    private LocalDateTime latestInteraction = LocalDateTime.now();
+    @Column(name = "reaction_date")
+    private LocalDateTime reactionDate = null;
+
+    @Column(name = "last_played")
+    private LocalDateTime lastPlayed = null;
 
     public Long getId() {
         return id;
@@ -83,11 +86,19 @@ public class UserActivity {
         this.userClickedPlay = userClickedPlay;
     }
 
-    public LocalDateTime getLatestInteraction() {
-        return latestInteraction;
+    public LocalDateTime getReactionDate() {
+        return reactionDate;
     }
 
-    public void setLatestInteraction(LocalDateTime dateTime) {
-        this.latestInteraction = dateTime;
+    public void setReactionDate(LocalDateTime dateTime) {
+        this.reactionDate = dateTime;
+    }
+
+    public LocalDateTime getLastPlayed() {
+        return lastPlayed;
+    }
+
+    public void setLastPlayed(LocalDateTime lastPlayed) {
+        this.lastPlayed = lastPlayed;
     }
 }
