@@ -8,7 +8,9 @@ import org.example.edufyuseractivity.repository.UserActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserActivityServiceImpl implements UserActivityService {
@@ -22,19 +24,45 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public UserActivity saveActivity(UserActivityDto userActivityDto) {
-        UserActivity userActivity = userActivityMapper.dtoToEntity(userActivityDto);
-        userActivityRepository.save(userActivity);
-        return userActivity;
+    public UserActivity saveReaction(UserActivityDto dto) {
+        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(dto.getMediaId(), dto.getMediaType(), dto.getUserId());
+
+        if (existing.isPresent()) {
+            UserActivity userActivity = existing.get();
+            userActivity.setReaction(dto.getReaction());
+            userActivity.setLatestInteraction(LocalDateTime.now());
+            return userActivityRepository.save(userActivity);
+        } else {
+            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
+            userActivityRepository.save(newUserActivity);
+            return newUserActivity;
+        }
     }
 
     @Override
-    public List<UserActivity> getUserActivity(String userId) {
+    public UserActivity savePlayedActivity(UserActivityDto dto) {
+        Optional<UserActivity> existing = userActivityRepository.findByMediaIdAndMediaTypeAndUserId(dto.getMediaId(), dto.getMediaType(), dto.getUserId());
+
+        if (existing.isPresent()) {
+            UserActivity userActivity = existing.get();
+            userActivity.setUserClickedPlay(true);
+            userActivity.setLatestInteraction(LocalDateTime.now());
+            return userActivityRepository.save(userActivity);
+        }  else {
+            UserActivity newUserActivity = userActivityMapper.dtoToEntity(dto);
+            newUserActivity.setUserClickedPlay(true);
+            userActivityRepository.save(newUserActivity);
+            return newUserActivity;
+        }
+    }
+
+    @Override
+    public List<UserActivity> getUserActivity(Long userId) {
         return userActivityRepository.findByUserId(userId);
     }
 
     @Override
-    public List<UserActivity> getMediaActivity(String mediaId, MediaType mediaType) {
+    public List<UserActivity> getMediaActivity(Long mediaId, MediaType mediaType) {
         return userActivityRepository.findByMediaIdAndMediaType(mediaId, mediaType);
     }
 }

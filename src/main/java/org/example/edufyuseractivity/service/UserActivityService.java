@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface UserActivityService {
 
-    UserActivity saveActivity(UserActivityDto userActivity);
+    UserActivity saveReaction(UserActivityDto userActivity);
 
-    List<UserActivity> getUserActivity(String userId);
+    UserActivity savePlayedActivity(UserActivityDto userActivity);
 
-    List<UserActivity> getMediaActivity(String mediaId, MediaType mediaType);
+    List<UserActivity> getUserActivity(Long userId);
+
+    List<UserActivity> getMediaActivity(Long mediaId, MediaType mediaType);
 
 
 }

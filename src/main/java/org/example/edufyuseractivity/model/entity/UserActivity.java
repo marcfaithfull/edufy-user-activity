@@ -16,10 +16,10 @@ public class UserActivity {
     private Long id;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "media_id")
-    private String mediaId;
+    private Long mediaId;
 
     @Column(name = "media_type")
     @Enumerated(EnumType.STRING)
@@ -29,8 +29,11 @@ public class UserActivity {
     @Enumerated(EnumType.STRING)
     private Reaction reaction = Reaction.NEUTRAL;
 
-    @Column(name = "timestamp")
-    private LocalDateTime dateTime = LocalDateTime.now();
+    @Column(name = "user_clicked_play")
+    private Boolean userClickedPlay = false;
+
+    @Column(name = "latest_activity")
+    private LocalDateTime latestInteraction = LocalDateTime.now();
 
     public Long getId() {
         return id;
@@ -40,19 +43,19 @@ public class UserActivity {
         this.id = id;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getMediaId() {
+    public Long getMediaId() {
         return mediaId;
     }
 
-    public void setMediaId(String mediaId) {
+    public void setMediaId(Long mediaId) {
         this.mediaId = mediaId;
     }
 
@@ -72,11 +75,19 @@ public class UserActivity {
         this.reaction = reaction;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Boolean getUserClickedPlay() {
+        return userClickedPlay;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setUserClickedPlay(Boolean userClickedPlay) {
+        this.userClickedPlay = userClickedPlay;
+    }
+
+    public LocalDateTime getLatestInteraction() {
+        return latestInteraction;
+    }
+
+    public void setLatestInteraction(LocalDateTime dateTime) {
+        this.latestInteraction = dateTime;
     }
 }
