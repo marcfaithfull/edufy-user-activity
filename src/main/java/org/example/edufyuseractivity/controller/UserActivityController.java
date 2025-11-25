@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/activity")
+@RequestMapping("/api/v1/user-activity")
 public class UserActivityController {
     private final UserActivityService userActivityService;
 
